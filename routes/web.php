@@ -24,6 +24,14 @@ Route::get('/register', 'Auth\RegisterController@index')->name('register');
 Route::post('/register', 'Auth\RegisterController@store');
 Route::post('/logout', 'Auth\LogoutController@store')->name('logout');
 
+
 Route::get('/posts', 'PostController@index')->name('posts.index');
+Route::post('/posts', 'PostController@store')->name('posts.store')->middleware('auth');
+Route::get('/posts/create', 'PostController@create')->name('posts.create')->middleware('auth');
+Route::get('/posts/{post}', 'PostController@show')->name('posts.show');
+Route::get('/posts/{post}/edit', 'PostController@edit')->name('posts.edit')->middleware('auth');
+Route::put('/posts/{post}', 'PostController@update')->name('posts.update')->middleware('auth');
+Route::delete('/posts/{post}', 'PostController@destroy')->name('posts.delete')->middleware('auth');
+
 
 

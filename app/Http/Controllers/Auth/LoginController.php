@@ -18,8 +18,10 @@ class LoginController extends Controller
             'password' => 'required|min:6'
         ]);
 
-        auth()->attempt($request->only('email', 'password'));
-
+        if(!auth()->attempt($request->only('email', 'password'))) {
+            return back()->with('status', 'Email or Password is incorrect');
+        }
+        
         return redirect()->route('home');
 
     }

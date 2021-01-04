@@ -20,7 +20,7 @@
 
             @auth
             <li>
-                <a href="/profile"> John Doe </a>
+                <a href="/profile"> {{ auth()->user()->name }} </a>
             </li>
             <li>
                 <form action="{{ route('logout') }}" method="POST">

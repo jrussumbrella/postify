@@ -5,6 +5,11 @@
 @section('content')
   <div>
     <h1> Log In </h1>
+
+    @if (session('status'))
+     <div> {{ session('status') }} </div>
+    @endif
+
     <form action="{{ route('login') }}" method="POST">
         @csrf
         <div>
