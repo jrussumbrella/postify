@@ -11,4 +11,13 @@ class Post extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    public function favorites() {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function isAlreadyLiked(User $user) {
+        return $this->favorites->contains('user_id', $user->id);
+    }
 } 
+ 

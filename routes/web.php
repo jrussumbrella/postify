@@ -33,5 +33,6 @@ Route::get('/posts/{post}/edit', 'PostController@edit')->name('posts.edit')->mid
 Route::put('/posts/{post}', 'PostController@update')->name('posts.update')->middleware('auth');
 Route::delete('/posts/{post}', 'PostController@destroy')->name('posts.delete')->middleware('auth');
 
-
+Route::post('/posts/{post}/favorite', 'PostFavoriteController@store')->name('posts.favorite')->middleware('auth');
+Route::delete('/posts/{post}/favorite', 'PostFavoriteController@destroy')->name('posts.favorite')->middleware('auth');
 
