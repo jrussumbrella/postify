@@ -15,7 +15,7 @@ class PostController extends Controller
     }
 
     public function index() {
-        $posts = Post::latest()->paginate(2);
+        $posts = Post::latest()->paginate(10);
         return view('posts.index', ['posts' => $posts]);
     }
 
@@ -34,16 +34,19 @@ class PostController extends Controller
     }
 
     public function edit(Post $post) {
+        $this->authorize('view', $post);
         return view('posts.edit', ['post' => $post]);
     }
 
     public function update(Post $post, Request $request) {
+        $this->authorize('update', $post);
         $this->validatePost($request);
         $post->update($request->only('title', 'description'));
         return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
     public function destroy(Post $post) {
+        $this->authorize('delete', $post);
         $post->delete();
         return redirect()->route('posts.index');
     }
