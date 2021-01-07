@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
 
@@ -10,21 +11,21 @@ class PostController extends Controller
     private function validatePost($request) {
         return $request->validate([
             'title' => 'required|min:6|max:100',
-            'description' => 'required|min:6|max:100',
+            'description' => 'required|min:6|max:500',
         ]);
     }
 
     public function index() {
         $posts = Post::latest()->paginate(10);
-        return view('posts.index', ['posts' => $posts]);
+        return view('user.posts.index', ['posts' => $posts]);
     }
 
     public function show(Post $post) {
-        return view('posts.show', ['post' => $post]);
+        return view('user.posts.show', ['post' => $post]);
     }
 
     public function create() {
-        return view('posts.create');
+        return view('user.posts.create');
     }
 
     public function store(Request $request) {
@@ -35,7 +36,7 @@ class PostController extends Controller
 
     public function edit(Post $post) {
         $this->authorize('view', $post);
-        return view('posts.edit', ['post' => $post]);
+        return view('user.posts.edit', ['post' => $post]);
     }
 
     public function update(Post $post, Request $request) {

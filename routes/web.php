@@ -24,15 +24,41 @@ Route::get('/register', 'Auth\RegisterController@index')->name('register');
 Route::post('/register', 'Auth\RegisterController@store');
 Route::post('/logout', 'Auth\LogoutController@store')->name('logout');
 
+// Front or User Routes
+Route::middleware(['auth'])->group(function () {
+    //Posts routes
+    Route::get('/posts/create', 'User\PostController@create')->name('posts.create');
+    Route::post('/posts', 'User\PostController@store')->name('posts.store');
+    Route::put('/posts/{post}', 'User\PostController@update')->name('posts.update');
+    Route::delete('/posts/{post}', 'User\PostController@destroy')->name('posts.destroy');
+    Route::get('/posts/{post}/edit', 'User\PostController@edit')->name('posts.edit');
 
-Route::get('/posts', 'PostController@index')->name('posts.index');
-Route::post('/posts', 'PostController@store')->name('posts.store')->middleware('auth');
-Route::get('/posts/create', 'PostController@create')->name('posts.create')->middleware('auth');
-Route::get('/posts/{post}', 'PostController@show')->name('posts.show');
-Route::get('/posts/{post}/edit', 'PostController@edit')->name('posts.edit')->middleware('auth');
-Route::put('/posts/{post}', 'PostController@update')->name('posts.update')->middleware('auth');
-Route::delete('/posts/{post}', 'PostController@destroy')->name('posts.delete')->middleware('auth');
+    //Posts Favorite routes
+    Route::post('/posts/{post}/favorite', 'PostFavoriteController@store')->name('posts.favorite');
+    Route::delete('/posts/{post}/favorite', 'PostFavoriteController@destroy')->name('posts.favorite');
+    
+});
 
-Route::post('/posts/{post}/favorite', 'PostFavoriteController@store')->name('posts.favorite')->middleware('auth');
-Route::delete('/posts/{post}/favorite', 'PostFavoriteController@destroy')->name('posts.favorite')->middleware('auth');
+Route::get('/posts', 'User\PostController@index')->name('posts.index');
+Route::get('/posts/{post}', 'User\PostController@show')->name('posts.show');
+
+// Admin Routes
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::prefix('admin')->group(function () {
+
+        //Dashboard
+        Route::get('/dashboard', 'Admin\DashboardController@index')->name('admin.dashboard');
+
+        //Categories routes
+        Route::get('/categories', function () {
+            return 'categories';
+        });
+
+        
+
+    });
+});
+
+
+
 

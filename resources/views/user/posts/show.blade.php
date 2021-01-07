@@ -32,7 +32,7 @@
         @endcan
 
         @can('delete', $post)        
-            <form action="{{ route('posts.delete', $post->id) }}" method="POST">
+            <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <button type="submit"> Delete </button>
